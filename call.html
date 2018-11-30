@@ -1,0 +1,132 @@
+<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<div id="dialog" title="Dialog Title">
+
+  <style>
+    #dialog {
+      position: relative;
+      overflow: hidden;
+      height: 350px;
+    }
+
+    .ui-dialog .ui-dialog-titlebar {
+      background: transparent;
+      border: none;
+      height: 20px;
+    }
+
+    #videos {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #max {
+      position: relative;
+    }
+
+    .min-max-icons {
+      position: absolute;
+      z-index: 999999999999999;
+      color: white;
+      top: 3%;
+      right: 10%;
+    }
+
+    .min-max-icons i{
+      padding: 6px 9px;
+    margin-right: 7px;
+    }
+
+    .min-max-icons i:hover,
+    .min-max-icons i:active {
+      color: white;
+      background-color:rgb(55,72,85);
+      border-radius: 50%;
+    }
+
+        .min-max-icons #minimize:hover,
+        .min-max-icons #minimize:active {
+         padding-bottom: 10px;
+        }
+  .display__block {
+    display: block !important;
+  }
+
+    </style>
+  <div id="loader"></div>
+  <div class="min-max-icons">
+    <i id="close" ng-click="dropCall()" class="fa fa-times pull-right calling btn circle small" aria-hidden="true"></i>
+    <i id="minimize" class="fa fa-window-minimize pull-right calling btn circle small" aria-hidden="true"></i>
+    <i id="max" style="display: none" class="fa fa-window-maximize pull-right calling btn circle small" aria-hidden="true"></i>
+  </div>
+  <div id="videos">
+      <div id="conversationWindow"></div>
+  </div>
+  <div id="previewWindow"></div>
+</div>
+
+
+<script ng-show="false">
+  $(document).ready(function () {
+    $("#dialog").dialog({
+      autoOpen: false,
+      resizable: false,
+      width: 450,
+      height: 600,
+      open: function () {
+        $(".ui-dialog-titlebar-close").css("display", "none");
+        $(".ui-widget-content").css("background", "black");
+        $('.ui-dialog').css({
+          "position": "fixed",
+          "top": "5%"
+        });
+      }
+    });
+    $("#dialog").dialog("open");
+    $("body").css('overflow', 'scroll');
+    $('.modal-backdrop').css('display', 'none');
+    $(".ui-dialog-title").css("display", "none");
+    $(".ui-dialog .ui-dialog-content").css("padding", "0");
+    $(".ui-draggable .ui-dialog-titlebar").css({
+      "position": "absolute",
+      "z-index": "999999999",
+      "width": "100%"
+    });
+    $(".ui-dialog-titlebar-close").css("display", "none");
+    $(".ui-dialog").css("background", "black");
+  });
+
+  $("#minimize").on('click', function () {
+    $('.ui-dialog').css("position", "fixed");
+    $("#dialog").parents('.ui-dialog').animate({
+      height: '50px',
+      top: '90%',
+      left: '60%',
+      width: '450px'
+    }, 500);
+    $("#minimize").hide();
+    $('#max').show();
+    $(".control-icons").css("top", "0").css("bottom", "auto");
+  });
+
+  $('#max').click(function () {
+    $('.ui-dialog').css({
+      "position": "fixed",
+      "top": "5%"
+    });
+    $('#dialog').parents('.ui-dialog').animate({
+      //set the positioning to center the dialog - 200 is equal to height of dialog
+      top: '5%',
+      //set the height again
+      height: '600px',
+      left: '40%',
+      width: '450px'
+    }, 200);
+    $("#minimize").show();
+    $('#max').hide();
+    $(".control-icons").css("bottom", "5px").css("top", "auto").css("left");
+    $("#dialog").css("height", "600px");
+
+  });
+</script>
